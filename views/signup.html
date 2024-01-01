@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="submit">
+      <input type="text" placeholder="Name" />
+      <input type="email" placeholder="Email" />
+      <input type="password" placeholder="Password" />
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+  <script>
+    const input = document.querySelectorAll("input");
+    document.querySelector("form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      fetch("http://localhost:2002/signup", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: input[0].value,
+          email: input[1].value,
+          password: input[2].value,
+        }),
+      })
+        .then((ele) => {
+          return ele.json();
+        })
+        .then((ele) => {
+          console.log(ele);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  </script>
+</html>
